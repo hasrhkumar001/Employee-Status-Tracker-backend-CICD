@@ -1,0 +1,12 @@
+#Development Stage
+From node:22 as dev
+
+WORKDIR /app
+
+COPY backend/package.json ./
+
+RUN npm install
+
+COPY backend ./
+
+CMD ["npx", "nodemon","index.js"]

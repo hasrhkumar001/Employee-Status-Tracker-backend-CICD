@@ -20,17 +20,17 @@ jobs:
         run: npm install
 
       - name: Build Docker image
-        run: docker build -t backend-image .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-image:latest .
 
       - name: Publish image to Docker Hub
-        run: docker push backend-image:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/backend-image:latest
 
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull Docker image
-        run: docker pull backend-image:latest
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/backend-image:latest
 
       - name: Stop and remove existing container
         run: |
@@ -38,4 +38,8 @@ jobs:
           docker rm backend-container || true
 
       - name: Run new container
-        run: docker run -d --name backend-container -p 3000:3000 -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} -e MONGO_URI=${{ secrets.MONGO_URI }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} backend-image:latest 
+        run: docker run -d --name backend-container -p 3000:3000 \
+          -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+          -e MONGO_URI=${{ secrets.MONGO_URI }} \
+          -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+          ${{ secrets.DOCKER_USERNAME }}/backend-image:latest

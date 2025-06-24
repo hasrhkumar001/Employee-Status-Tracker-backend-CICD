@@ -5,10 +5,12 @@ FROM node:22 as prod
 
 WORKDIR /app
 
-COPY backend/package*.json ./
+COPY package*.json ./
 
 RUN npm install 
 
-COPY backend ./
+COPY . .
 
-CMD ["node", "index.js"]
+EXPOSE 5000
+
+CMD ["node", "index.js"]git

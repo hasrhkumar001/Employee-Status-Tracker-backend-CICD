@@ -39,9 +39,9 @@ jobs:
 
       - name: Run new container
         run: |
-          docker run -d --name backend-container -p 3000:3000 \
-            -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
-            -e MONGO_URI=${{ secrets.MONGO_URI }} \
-            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+          docker run -d --name backend-container -p 5000:5000 \
+            -e MONGO_PASSWORD="${{ secrets.MONGO_PASSWORD }}" \
+            -e MONGO_URI="${{ secrets.MONGO_URI }}" \
+            -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
             ${{ secrets.DOCKER_USERNAME }}/backend-image:latest
 

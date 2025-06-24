@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["node", "index.js"]git
+CMD ["node", "index.js"]
